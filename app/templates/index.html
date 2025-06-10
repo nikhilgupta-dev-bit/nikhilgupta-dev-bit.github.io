@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Professional Developer</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}?v=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content container">
+            <h1>Nikhil Gupta</h1>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#awards">Awards</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content animate-fade-in">
+            <h1 class="hero-title">Full Stack Developer</h1>
+            <p class="text-lg text-secondary mb-8">Crafting beautiful and functional web experiences</p>
+            
+
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="card animate-fade-in">
+                <div class="about-content">
+                    <img src="{{ url_for('static', path='/images/portfoliopic.jpg') }}" alt="Profile Picture" class="profile-img" image-size="100px" !important>
+                    <div class="about-text">
+                        <p>Hello! I'm a passionate Full Stack Developer with expertise in building modern web applications. I specialize in Python, and various modern frameworks. I love creating elegant solutions to complex problems and am constantly learning new technologies,currently learning fastapi and machine learning.</p>
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/in/nikhil-gupta-76a6a12a6/" target="_blank" title="LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="mailto:nikhilunofficial123@gmail.com" title="Email">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            <a href="https://github.com/nikhilgupta-dev-bit" target="_blank" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Skills & Expertise</h2>
+            <div class="skills-grid">
+                <div class="skill-card animate-fade-in">
+                    <i class="fas fa-code"></i>
+                    <h3>Frontend Development</h3>
+                    <p>HTML5, CSS3, JavaScript, React, Vue.js</p>
+                </div>
+                <div class="skill-card animate-fade-in">
+                    <i class="fas fa-server"></i>
+                    <h3>Backend Development</h3>
+                    <p>Python, FastAPI, Django, Node.js</p>
+                </div>
+                <div class="skill-card animate-fade-in">
+                    <i class="fas fa-database"></i>
+                    <h3>Database Management</h3>
+                    <p>PostgreSQL, MongoDB, Redis</p>
+                </div>
+                <div class="skill-card animate-fade-in">
+                    <i class="fas fa-cloud"></i>
+                    <h3>Cloud Services</h3>
+                    <p>AWS, Docker, CI/CD</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid" id="projects-container">
+                <!-- Projects will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+        <div class="container">
+            <h2 class="section-title">Education</h2>
+            <div class="card animate-fade-in">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h3>Btech in Computer Science and Engineering (AI & ML)</h3>
+                        <p class="text-secondary">Manipal Universit Jaipur, 2023-2027</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards Section -->
+    <section id="awards">
+        <div class="container">
+            <h2 class="section-title">Awards & Certifications</h2>
+            <div class="skills-grid">
+                <div class="skill-card animate-fade-in">
+                    <i class="fas fa-trophy"></i>
+                    <h3>AWS Certified Developer</h3>
+                    <p>Amazon Web Services, 2023</p>
+                    <h3>IIT-D ideathon 2025 </h3>
+                    <p><Heathsync class="Ai"></Heathsync></p>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Nikhil Gupta. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Fetch and display projects
+        async function loadProjects() {
+            try {
+                const response = await fetch('/api/projects');
+                const projects = await response.json();
+                const container = document.getElementById('projects-container');
+                
+                projects.forEach(project => {
+                    const projectCard = document.createElement('div');
+                    projectCard.className = 'project-card animate-fade-in';
+                    projectCard.innerHTML = `
+                        ${project.image_url ? `
+                            <div class="project-image-container">
+                                <img src="${project.image_url}" alt="${project.title}">
+                            </div>
+                        ` : ''}
+                        <div class="project-content">
+                            <h3>${project.title}</h3>
+                            <p>${project.description}</p>
+                            <div class="technologies">
+                                ${project.technologies.map(tech => `<span>${tech}</span>`).join('')}
+                            </div>
+                            <div class="project-links">
+                                ${project.github_url ? `<a href="${project.github_url}" target="_blank" title="View on GitHub"><i class="fab fa-github"></i></a>` : ''}
+                                ${project.project_url ? `<a href="${project.project_url}" target="_blank" title="View Live Demo"><i class="fas fa-external-link-alt"></i></a>` : ''}
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(projectCard);
+                });
+            } catch (error) {
+                console.error('Error loading projects:', error);
+            }
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.animate-fade-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            observer.observe(el);
+        });
+
+        // Load projects when the page loads
+        document.addEventListener('DOMContentLoaded', loadProjects);
+    </script>
+</body>
+</html>
